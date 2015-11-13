@@ -3,8 +3,8 @@ def jettyUrl = 'http://localhost:8081/'
 stage 'Dev'
 node {
     checkout scm
-    mvn '-o clean package'
-    archive 'target/x.war'
+    // mvn '-o clean package'
+    // archive 'target/x.war'
 }
 
 stage 'QA'
@@ -50,12 +50,13 @@ def runTests(duration) {
 }
 
 def deploy(id) {
-    unarchive mapping: ['target/x.war' : 'x.war']
-    sh "cp x.war /tmp/webapps/${id}.war"
+    // unarchive mapping: ['target/x.war' : 'x.war']
+    // sh "cp x.war /tmp/webapps/${id}.war"
+    sh "sleep 10"
 }
 
 def undeploy(id) {
-    sh "rm /tmp/webapps/${id}.war"
+   // sh "rm /tmp/webapps/${id}.war"
 }
 
 def runWithServer(body) {
