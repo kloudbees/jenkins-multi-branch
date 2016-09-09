@@ -1,7 +1,7 @@
 def jettyUrl = 'http://localhost:8081/'
 
 stage 'Dev'
-node {
+node ('node-cd'){
     checkout scm
     // mvn '-o clean package'
     // archive 'target/x.war'
@@ -15,7 +15,7 @@ parallel(longerTests: {
 })
 
 stage name: 'Staging', concurrency: 1
-node {
+node ('node-cd'){
     deploy 'staging'
 }
 
@@ -27,7 +27,7 @@ try {
 }
 
 stage name: 'Production', concurrency: 1
-node {
+node ('node-production') {
     //sh "wget -O - -S ${jettyUrl}staging/"
     echo 'Production server looks to be alive'
     deploy 'production'
@@ -39,7 +39,7 @@ def mvn(args) {
 }
 
 def runTests(duration) {
-    node {
+    node ('node-cd'){
         checkout scm
         sh "sleep ${duration}"
         /*
